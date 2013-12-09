@@ -10,4 +10,7 @@ as single decimal digits. As a consequence, the formula can contain at most four
 propositions, which can be represented as single letters. Each formula must not contain parentheses,
 thus it is necessary to apply precedence and associativity rules.
 
-The whole program is licensed under the terms of gpl v3 or later, exept the assaigment
+The whole program is licensed under the terms of gpl v3 or later, except for the assaigment.
+
+Assaigment:
+(http://www.sti.uniurb.it/bernardo/teaching/prog_proc_logi/progetto_prog_proc_logi.pdf)
