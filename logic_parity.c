@@ -36,11 +36,13 @@ typedef  struct{
 	} fun;
 
 int getInput(fun[]);
+int waitNewLine();
 int insertMem(fun [], char, int);
 int validateInput(char, int);
 int genCase(fun[], int);
 int profEquality(fun[], fun[]);
 int printMem(fun[]);
+int genValues(int, int);
 int main(){
 	fun data[LIMIT]; 
 	fun data2[LIMIT];
@@ -53,10 +55,11 @@ int main(){
 	}
 	printf("\n");	
 	if ( profEquality(data, data2) )
-		printf("\nTrue\n");
+		printf("True\n");
 	else
-		printf("/nFalse\n");
+		printf("False\n");
 	printMem(data);
+	printMem(data2);
 	return 0;
 }
 int getInput(fun mem[]){
@@ -66,17 +69,18 @@ int getInput(fun mem[]){
 	while ( error ){
 		/* New Try, Clear Error*/
 		error = false;
-		printf("Please type the logical formel \n" );
+		printf("Please type the logical formel\n" );
 		while ( !error && i < LIMIT &&  cache != '\n' ){
-			scanf("%c", &cache);
+			/*scanf("%c", &cache);*/
+			cache = getchar();
 				error = validateInput(cache, i);
-				if ( cache == '\n' && validateInput(mem[i-1].name, i-1)){
+				if ( cache == '\n' && i%2 == 0  ){
 					error = true;
 				}
 				if ( !error ){
 					if ( cache == '0' ){
 						mem[i].not = true;
-						scanf("%c", &cache);
+						cache = getchar();
 					}
 					else
 						mem[i].not = false;
@@ -87,7 +91,9 @@ int getInput(fun mem[]){
 				if ( error ){
 					printf("Please type a corect formel\n");
 					i = 0;
+					waitNewLine();
 				}
+
 		}
 	}
 	return error;
@@ -113,6 +119,14 @@ int validateInput(char cache, int i){
 	return error;
 }
 
+int waitNewLine(){
+	char tmp = '1';
+	while ( tmp != '\n' ){
+		printf("Loop\n");
+		scanf("%c", &tmp);
+	}
+	return 0;
+}
 int insertMem(fun mem[], char cache, int i){
 	if ( i%2 == 0 ){
 		mem[i].name = cache;
@@ -142,7 +156,7 @@ int genCase(fun mem[], int i){
 	int j = 0, k = 0, n = 0;
 
 	while ( n < LIMIT && mem[n].name != '\n' ){
-		mem[n].value = 2;
+		mem[n].value = genValues(i, n);
 		n +=2;
 	}
 	while ( j < LIMIT && mem[j+i].name != '\n' ){
@@ -155,6 +169,9 @@ int genCase(fun mem[], int i){
 		k = 0;
 	}
 			return 0;
+}
+int genValues(int line, int j){
+	return 0;
 }
 int printMem(fun mem[]){
 	int i = 0;
