@@ -38,15 +38,25 @@ typedef  struct{
 int getInput(fun[]);
 int insertMem(fun [], char, int);
 int validateInput(char, int);
+int genCase(fun[], int);
+int profEquality(fun[], fun[]);
+int printMem(fun[]);
 int main(){
 	fun data[LIMIT]; 
+	fun data2[LIMIT];
 	int i = 0;
 	getInput(data);
+	getInput(data2);
 	while ( i < LIMIT && data[i].value != (int)( '\n' - '0' )){
 			printf("%c", data[i].name);
 		i++;
 	}
 	printf("\n");	
+	if ( profEquality(data, data2) )
+		printf("\nTrue\n");
+	else
+		printf("/nFalse\n");
+	printMem(data);
 	return 0;
 }
 int getInput(fun mem[]){
@@ -81,8 +91,7 @@ int getInput(fun mem[]){
 		}
 	}
 	return error;
-}
-
+}	
 int validateInput(char cache, int i){
 	int error = true;
 	if ( i%2 == 0 ){
@@ -93,7 +102,7 @@ int validateInput(char cache, int i){
 			error = true;
 	}
 	else{
-		if ( cache >= '1' && cache <= '3' ){
+		if ( cache >= '1' && cache <= '4' ){
 			error = false;
 		}
 		else
@@ -113,5 +122,46 @@ int insertMem(fun mem[], char cache, int i){
 		mem[i].name = cache;
 		mem[i].value = (int)(cache - '0');
 	}
+	return 0;
+}
+int profEquality(fun mem[], fun mem2[]){
+	int error = false;
+	int i = 0;
+	while ( !error && i < LIMIT ){
+		if ( genCase(mem, i) == genCase(mem2, i) ){
+			error = false;
+			i++;
+		}
+		else
+			error = true;
+	}
+	return error;
+}
+/* i is the current line of the thrutable*/
+int genCase(fun mem[], int i){
+	int j = 0, k = 0, n = 0;
+
+	while ( n < LIMIT && mem[n].name != '\n' ){
+		mem[n].value = 2;
+		n +=2;
+	}
+	while ( j < LIMIT && mem[j+i].name != '\n' ){
+		while ( k < LIMIT && mem[k+1].name != '\n'){
+			if ( mem[j].name == mem[k].name )
+				mem[k].value = mem[j].value;
+			k += 2;
+		}
+		j += 2;
+		k = 0;
+	}
+			return 0;
+}
+int printMem(fun mem[]){
+	int i = 0;
+	while ( i < LIMIT && mem[i].name != '\n' ) {
+		printf("%d", mem[i].value);
+		i++;
+	}
+	printf("\n");
 	return 0;
 }
