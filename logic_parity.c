@@ -30,66 +30,68 @@ typedef enum{
 	iff
 } logic;
 typedef  struct{
-	char prop;
+	char name;
 	int value;
 	int not;
 	} fun;
 
 int getInput(fun[]);
-
+int insertMem(fun [], char, int);
+int validateInput(char, int);
 int main(){
 	fun data[LIMIT]; 
 	int i = 0;
 	getInput(data);
 	while ( i < LIMIT && data[i].value != (int)( '\n' - '0' )){
-		if ( i%2 == 0 )
-			printf("%c", data[i].prop);
-		else
-			printf("%d", data[i].value);
+			printf("%c", data[i].name);
 		i++;
 	}
 	printf("\n");	
 	return 0;
 }
-int getInput(fun input[]){
+int getInput(fun mem[]){
 	int i = 0;
-	fun tmp;
-	int error = 0;
+	int error = 1;
 	char cache;
-	printf("Please type the logical formel \n" );
-	while ( !error && i < LIMIT &&  cache != '\n' ){
-		scanf("%c", &cache);
-			if ( i%2 == 0 ){
-				if ( cache == '0' ){
-					input[i].not = true;
-				}
-				else if ( cache >= 'A' && cache <= 'Z' ){
-					input[i].value = true;
-					input[i].prop = cache;
-					if ( i > 2 && input[i-1].value < input[i-3].value ){
-						tmp = input[i];
-						input[i] = input[i-4];
-						input[i-4] = tmp;
-						tmp = input[i-1];
-						input[i-1] = input[i-3];
-						input[i-3] = tmp;
+	while ( error ){
+		/* New Try, Clear Error*/
+		error = 0;
+		printf("Please type the logical formel \n" );
+		while ( !error && i < LIMIT &&  cache != '\n' ){
+			scanf("%c", &cache);
+				error = validateInput(cache, i);
+				if ( !error ){
+					if ( cache == '0' ){
+						mem[i].not = true;
+						scanf("%c", &cache);
 					}
+					else
+						mem[i].not = false;
+					
+					error = insertMem(mem, cache, i);
 					i++;
 				}
-				else{
-					error += 1;
+				if ( error ){
+					printf("Please type a corect formel");
 					i = 0;
-					}
-			}
-			else if ( cache < 'A' || cache > 'Z' ){
-				input[i].value = (int)(cache -'0');
-				i++;
-			
-			}
-			else{
-				error += 1;
-				i = 0;
-			}
+				}
+		}
 	}
 	return error;
+}
+
+int validateInput(char cache, int i){
+	return 0;
+}
+
+int insertMem(fun mem[], char cache, int i){
+	if ( i%2 == 0 ){
+		mem[i].name = cache;
+		mem[i].value = 0;
+	}
+	else{
+		mem[i].name = cache;
+		mem[i].value = (int)(cache - '0');
+	}
+	return 0;
 }

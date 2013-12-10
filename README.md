@@ -14,3 +14,18 @@ The whole program is licensed under the terms of gpl v3 or later, except for the
 
 Assaigment:
 (http://www.sti.uniurb.it/bernardo/teaching/prog_proc_logi/progetto_prog_proc_logi.pdf)
+
+
+
+Problems:
+	Read logical function
+		data strutc
+			NOT
+		validation
+	Implement logical Con
+		AND
+		OR
+		IF-THEN
+		IFF
+	Equality prof
+		Calc ris for each line of Truhtable and compare ris with second function
