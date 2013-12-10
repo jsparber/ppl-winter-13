@@ -5,7 +5,7 @@
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
+ *  the Free Software Foundation; either version 3 of the License, or
  *  (at your option) any later version.
  *
  *  This program is distributed in the hope that it will be useful,
@@ -51,15 +51,18 @@ int main(){
 }
 int getInput(fun mem[]){
 	int i = 0;
-	int error = 1;
+	int error = true;
 	char cache;
 	while ( error ){
 		/* New Try, Clear Error*/
-		error = 0;
+		error = false;
 		printf("Please type the logical formel \n" );
 		while ( !error && i < LIMIT &&  cache != '\n' ){
 			scanf("%c", &cache);
 				error = validateInput(cache, i);
+				if ( cache == '\n' && validateInput(mem[i-1].name, i-1)){
+					error = true;
+				}
 				if ( !error ){
 					if ( cache == '0' ){
 						mem[i].not = true;
@@ -72,7 +75,7 @@ int getInput(fun mem[]){
 					i++;
 				}
 				if ( error ){
-					printf("Please type a corect formel");
+					printf("Please type a corect formel\n");
 					i = 0;
 				}
 		}
@@ -81,7 +84,24 @@ int getInput(fun mem[]){
 }
 
 int validateInput(char cache, int i){
-	return 0;
+	int error = true;
+	if ( i%2 == 0 ){
+		if ( (cache >= 'A' && cache <= 'Z') || cache == '0' ){
+			error = false;
+		}
+		else
+			error = true;
+	}
+	else{
+		if ( cache >= '1' && cache <= '3' ){
+			error = false;
+		}
+		else
+			error = true;
+	}
+	if ( cache == '\n' )
+		error = false;
+	return error;
 }
 
 int insertMem(fun mem[], char cache, int i){
