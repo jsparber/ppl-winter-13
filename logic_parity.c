@@ -65,13 +65,14 @@ int main(){
 int getInput(fun mem[]){
 	int i = 0;
 	int error = true;
-	char cache;
+	char cache = '1';
 	while ( error ){
 		/* New Try, Clear Error*/
 		error = false;
+		i = 0;
+		cache = '1';
 		printf("Please type the logical formel\n" );
 		while ( !error && i < LIMIT &&  cache != '\n' ){
-			/*scanf("%c", &cache);*/
 			cache = getchar();
 				error = validateInput(cache, i);
 				if ( cache == '\n' && i%2 == 0  ){
@@ -91,7 +92,6 @@ int getInput(fun mem[]){
 				if ( error ){
 					printf("Please type a corect formel\n");
 					i = 0;
-					waitNewLine();
 				}
 
 		}
