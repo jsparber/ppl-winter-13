@@ -146,7 +146,7 @@ int insertMem(fun mem[], char cache, int i){
 int profEquality(fun mem[], fun mem2[]){
 	int  equal = true;
 	int i = 0;
-	while ( equal && i < 4  ){
+	while ( equal && i < 8  ){
 		if ( calcCase(mem, i) == calcCase(mem2, i) ){
 			equal = true;
 			i++;
@@ -157,7 +157,7 @@ int profEquality(fun mem[], fun mem2[]){
 	return equal;
 }
 int calcCase(fun mem[], int line){
-	int res;
+	int res = 0;
 	insertValues(mem, line);
 	profValues(mem);
 	res = calcResult(mem, 1);
@@ -170,24 +170,28 @@ int profValues(fun mem[]){
 }
 int calcResult(fun mem[], int i){
 	int ris;
-	if ( mem[i+2].name == '\n' ){
-		ris = mem[i+1].value;
+	if ( mem[i+2].name == '\n' || mem[i].name == '\n' ){
+		printf("Im her %d\n",i );
+		ris = boolCalc(mem[i-1].value, mem[i+1].value, mem[i].value);
+		ris = 0;
 	}      
 	else{
-		if ( i < 1 )
-			ris = mem[0].value;
+		if ( i < 1 ){
+			ris = boolCalc(mem[0].value, mem[2].value, mem[1].value);
+		}
 			else{
-				if ( mem[i].value < mem[i+2].value ){
-					ris = boolCalc(calcResult(mem, i-1), calcResult(mem, i+1), mem[i].value);
+				if ( mem[i].value > mem[i+2].value ){
+					ris = boolCalc(calcResult(mem, i+2), calcResult(mem, i+4), mem[i+2].value);
 				}
-				else
-					ris = boolCalc(calcResult(mem, i+1), calcResult(mem, i+3), mem[i+2].value);
+				else{
+					ris = boolCalc(calcResult(mem, i-2), calcResult(mem, i+2), mem[i].value);
+				}
 			}
-	}       
+	}
 	return ris;
 }
 int boolCalc(int a, int b, int op){
-	int res;
+	int res = 0;;
 	switch (op){
 		case 1:
 			res = a && b;
