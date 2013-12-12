@@ -19,6 +19,7 @@
  */
  
 #include <stdio.h>
+
 #define true 1
 #define false 0
 #define LIMIT 10
@@ -39,21 +40,24 @@ int getInput(fun[]);
 int waitNewLine();
 int insertMem(fun [], char, int);
 int validateInput(char, int);
-int genCase(fun[], int);
+int calcCase(fun[], int);
 int profEquality(fun[], fun[]);
 int printMem(fun[]);
 int genValues(int, int);
+int powerTwo(int);
+int insertValues(fun[], int);
+int profValues(fun[]);
+int calcResult(fun[], int);
+int profValues(fun[]);
+int boolCalc(int, int, int);
+
 int main(){
 	fun data[LIMIT]; 
 	fun data2[LIMIT];
-	int i = 0;
+
 	getInput(data);
 	getInput(data2);
-	while ( i < LIMIT && data[i].value != (int)( '\n' - '0' )){
-			printf("%c", data[i].name);
-		i++;
-	}
-	printf("\n");	
+
 	if ( profEquality(data, data2) )
 		printf("True\n");
 	else
@@ -138,40 +142,96 @@ int insertMem(fun mem[], char cache, int i){
 	}
 	return 0;
 }
+/* i should be number of prepositons*/
 int profEquality(fun mem[], fun mem2[]){
-	int error = false;
+	int  equal = true;
 	int i = 0;
-	while ( !error && i < LIMIT ){
-		if ( genCase(mem, i) == genCase(mem2, i) ){
-			error = false;
+	while ( equal && i < 4  ){
+		if ( calcCase(mem, i) == calcCase(mem2, i) ){
+			equal = true;
 			i++;
 		}
 		else
-			error = true;
+			equal = false;
 	}
-	return error;
+	return equal;
 }
-/* i is the current line of the thrutable*/
-int genCase(fun mem[], int i){
-	int j = 0, k = 0, n = 0;
+int calcCase(fun mem[], int line){
+	int res;
+	insertValues(mem, line);
+	profValues(mem);
+	res = calcResult(mem, 1);
+	printf("Ris = %d\n", res);
+	return res;
+}
 
-	while ( n < LIMIT && mem[n].name != '\n' ){
-		mem[n].value = genValues(i, n);
+int profValues(fun mem[]){
+	return 0;
+}
+int calcResult(fun mem[], int i){
+	int ris;
+	if ( mem[i+2].name == '\n' ){
+		ris = mem[i+1].value;
+	}      
+	else{
+		if ( i < 1 )
+			ris = mem[0].value;
+			else{
+				if ( mem[i].value < mem[i+2].value ){
+					ris = boolCalc(calcResult(mem, i-1), calcResult(mem, i+1), mem[i].value);
+				}
+				else
+					ris = boolCalc(calcResult(mem, i+1), calcResult(mem, i+3), mem[i+2].value);
+			}
+	}       
+	return ris;
+}
+int boolCalc(int a, int b, int op){
+	int res;
+	switch (op){
+		case 1:
+			res = a && b;
+			break;
+		case 2:
+			res = a || b;
+			break;
+	}	
+	return res;
+}
+int insertValues(fun mem[], int line){
+	int n = 0;
+	while ( n < LIMIT && mem[n-1].name != '\n' && mem[n-1].name != '\n' ){
+		mem[n].value = genValues(line, n/2);
+		printf("line = %d col = %d ris = %d\n", line, n/2, mem[n].value);
 		n +=2;
 	}
-	while ( j < LIMIT && mem[j+i].name != '\n' ){
-		while ( k < LIMIT && mem[k+1].name != '\n'){
-			if ( mem[j].name == mem[k].name )
-				mem[k].value = mem[j].value;
-			k += 2;
-		}
-		j += 2;
-		k = 0;
-	}
-			return 0;
-}
-int genValues(int line, int j){
 	return 0;
+}
+
+int genValues(int line, int col){
+	int i = 0;
+	int j = 0;
+	int ris = false;
+	while ( i < line ){
+		if ( j == (powerTwo(col) - 1) ){
+			j = 0;
+			ris = !ris;
+		}
+		else{
+			j++;
+		}
+		i++;
+	}
+	return ris;
+}
+
+int powerTwo(int x){
+	int ris;
+	if ( x == 0 )
+		ris = 1;
+	else
+		ris = powerTwo(x-1) * 2;
+	return ris;
 }
 int printMem(fun mem[]){
 	int i = 0;
