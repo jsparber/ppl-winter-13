@@ -173,12 +173,8 @@ int calcResult(fun mem[], int i){
 	if ( mem[i+1].name == '\n' ){
 		ris = mem[i].value;		
 	}      
-	else{/* Change Test i-1 and i+1*/
-		if ( mem[i+1].value < mem[i+3].value ){
+	else{
 			ris = boolCalc(mem[i].value, mem[i+1].value, calcResult(mem, i+2));
-		}
-		else
-			ris = boolCalc(calcResult(mem, i+2), mem[i+3].value, mem[i+4].value);
 	}
 	return ris;
 }
