@@ -160,7 +160,7 @@ int calcCase(fun mem[], int line){
 	int res = 0;
 	insertValues(mem, line);
 	profValues(mem);
-	res = calcResult(mem, 1);
+	res = calcResult(mem, 0);
 	printf("Ris = %d\n", res);
 	return res;
 }
@@ -170,27 +170,15 @@ int profValues(fun mem[]){
 }
 int calcResult(fun mem[], int i){
 	int ris;
-	if ( mem[i+2].name == '\n' || mem[i].name == '\n' ){
-		printf("Im her %d\n",i );
-		ris = boolCalc(mem[i-1].value, mem[i+1].value, mem[i].value);
-		ris = 0;
+	if ( mem[i+1].name == '\n' ){
+		ris = mem[i].value;		
 	}      
 	else{
-		if ( i < 1 ){
-			ris = boolCalc(mem[0].value, mem[2].value, mem[1].value);
-		}
-			else{
-				if ( mem[i].value > mem[i+2].value ){
-					ris = boolCalc(calcResult(mem, i+2), calcResult(mem, i+4), mem[i+2].value);
-				}
-				else{
-					ris = boolCalc(calcResult(mem, i-2), calcResult(mem, i+2), mem[i].value);
-				}
-			}
+			ris = boolCalc(mem[i].value, mem[i+1].value, calcResult(mem, i+2));
 	}
 	return ris;
 }
-int boolCalc(int a, int b, int op){
+int boolCalc(int a, int op, int b){
 	int res = 0;;
 	switch (op){
 		case 1:
