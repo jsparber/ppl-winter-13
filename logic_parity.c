@@ -47,7 +47,7 @@ int genValues(int, int);
 int powerTwo(int);
 int insertValues(fun[], int);
 int profValues(fun[]);
-int calcResult(fun[], int);
+int calcResult(fun[], int, int);
 int profValues(fun[]);
 int boolCalc(int, int, int);
 
@@ -160,7 +160,7 @@ int calcCase(fun mem[], int line){
 	int res = 0;
 	insertValues(mem, line);
 	profValues(mem);
-	res = calcResult(mem, 0);
+	res = calcResult(mem, 0, 4);
 	printf("Ris = %d\n", res);
 	return res;
 }
@@ -168,13 +168,21 @@ int calcCase(fun mem[], int line){
 int profValues(fun mem[]){
 	return 0;
 }
-int calcResult(fun mem[], int i){
+int calcResult(fun mem[], int i, int level){
 	int ris;
+	int pos;
 	if ( mem[i+1].name == '\n' ){
 		ris = mem[i].value;		
 	}      
 	else{
-			ris = boolCalc(mem[i].value, mem[i+1].value, calcResult(mem, i+2));
+		while( mem[i+1].name != '\n' ){
+			if ( level > mem[i+1].value ){
+				level = mem[i+1].value;
+				pos = i + 1;
+			}
+			i += 2;
+		}
+		ris = boolCalc(calcResult(mem, pos-1, level), mem[pos].value, calcResult(mem, pos+1, level));
 	}
 	return ris;
 }
