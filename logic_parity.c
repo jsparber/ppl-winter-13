@@ -37,7 +37,6 @@ typedef  struct{
 	} fun;
 
 int getInput(fun[]);
-int waitNewLine();
 int insertMem(fun [], char, int);
 int validateInput(char, int);
 int calcCase(fun[], int);
@@ -47,7 +46,7 @@ int genValues(int, int);
 int powerTwo(int);
 int insertValues(fun[], int);
 int profValues(fun[]);
-int calcResult(fun[], int, int);
+int calcResult(fun[], int, int, int);
 int profValues(fun[]);
 int boolCalc(int, int, int);
 
@@ -123,14 +122,6 @@ int validateInput(char cache, int i){
 	return error;
 }
 
-int waitNewLine(){
-	char tmp = '1';
-	while ( tmp != '\n' ){
-		printf("Loop\n");
-		scanf("%c", &tmp);
-	}
-	return 0;
-}
 int insertMem(fun mem[], char cache, int i){
 	if ( i%2 == 0 ){
 		mem[i].name = cache;
@@ -160,7 +151,7 @@ int calcCase(fun mem[], int line){
 	int res = 0;
 	insertValues(mem, line);
 	profValues(mem);
-	res = calcResult(mem, 0, 4);
+	res = calcResult(mem, 0, LIMIT, 4);
 	printf("Ris = %d\n", res);
 	return res;
 }
@@ -168,21 +159,26 @@ int calcCase(fun mem[], int line){
 int profValues(fun mem[]){
 	return 0;
 }
-int calcResult(fun mem[], int i, int level){
+int calcResult(fun mem[], int start, int end, int level){
 	int ris;
-	int pos;
-	if ( mem[i+1].name == '\n' ){
-		ris = mem[i].value;		
+	int pos = 0;
+	int j = start;
+
+		printf("start %d end = %d field = %d\n", start, end, mem[start+1].value);
+	if ( mem[start+1].name == '\n' || end == 0 || end == start){
+		printf("Somit wis kimm i net do her?\n");
+		ris = mem[start].value;		
 	}      
 	else{
-		while( mem[i+1].name != '\n' ){
-			if ( level > mem[i+1].value ){
-				level = mem[i+1].value;
-				pos = i + 1;
+		while( j < end && mem[j+1].name != '\n' ){
+			if ( level > mem[j+1].value ){
+				level = mem[j+1].value;
+				pos = j + 1;
 			}
-			i += 2;
+			j += 2;
 		}
-		ris = boolCalc(calcResult(mem, pos-1, level), mem[pos].value, calcResult(mem, pos+1, level));
+		printf("pos = %d\n", pos);
+		ris = boolCalc(calcResult(mem, start, pos-1, 4), mem[pos].value, calcResult(mem, pos+1, end, 4));
 	}
 	return ris;
 }
