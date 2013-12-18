@@ -219,8 +219,7 @@ int boolCalc(int a, int op, int b){
 			res = (!a) || b;
 			break;
 		case 4: 
-			/*res = ( ( !a ) && ( !b ) ) || ( a && b );*/
-			res = a || b;
+			res = ( ( !a ) && ( !b ) ) || ( a && b );
 			break;
 	}	
 	return res;
