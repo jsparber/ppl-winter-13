@@ -189,7 +189,7 @@ int calcResult(fun mem[], int start, int end){
 	int ris;
 	int pos = 0;
 	int j = start;
-	int level = 4;
+	int level = 5;
 
 	if ( mem[start+1].name == '\n' || end == 0 || end == start ){
 		ris = mem[start].value;		
@@ -219,7 +219,8 @@ int boolCalc(int a, int op, int b){
 			res = (!a) || b;
 			break;
 		case 4: 
-			res = ( ( !a ) && ( !b ) ) || ( a && b );
+			/*res = ( ( !a ) && ( !b ) ) || ( a && b );*/
+			res = a || b;
 			break;
 	}	
 	return res;
