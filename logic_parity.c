@@ -139,7 +139,7 @@ int insertMem(fun mem[], char cache, int i){
 	}
 	return 0;
 }
-/* i should be number of prepositons*/
+/* 8 should be number of prepositons not hard coded*/
 int profEquality(fun mem[], fun mem2[]){
 	int  equal = true;
 	int i = 0;
@@ -189,14 +189,14 @@ int calcResult(fun mem[], int start, int end){
 	int ris;
 	int pos = 0;
 	int j = start;
-	int level = 5;
+	int level = 0;
 
 	if ( mem[start+1].name == '\n' || end == 0 || end == start ){
 		ris = mem[start].value;		
 	}      
 	else{
 		while( j < end && mem[j+1].name != '\n' ){
-			if ( level > mem[j+1].value ){
+			if ( level < mem[j+1].value ){
 				level = mem[j+1].value;
 				pos = j + 1;
 			}
