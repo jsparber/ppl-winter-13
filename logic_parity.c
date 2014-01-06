@@ -30,7 +30,6 @@ typedef  struct{
 	int not;
 	} fun;
 
-int clearBuffer();
 int getInput(fun[]);
 int insertMem(fun [], char, int);
 int validateInput(char, int);
@@ -86,22 +85,15 @@ int getInput(fun mem[]){
 					
 					error = insertMem(mem, cache, i);
 					mem[LIMIT].value = ( i + 1 ) / 2;
-					printf("Num Prop: %d\n", mem[LIMIT].value);
 					i++;
 				}
-				else{
-					clearBuffer();
-					printf("Please type a corect formula\n");
-				}
+		}
+		if ( error || !second_formula ){
+			printf("Please type a corect formula\n");
 		}
 
 	}
 	return error;
-}
-int clearBuffer(){
-	if ( getchar() != '\n' )
-		clearBuffer();
-	return 0;
 }
 
 int validateInput(char cache, int i){
