@@ -23,13 +23,7 @@
 #define true 1
 #define false 0
 #define LIMIT 10
-typedef enum{
-	not,
-	or,
-	and,
-	ifthen,
-	iff
-} logic;
+
 typedef  struct{
 	char name;
 	int value;
@@ -41,44 +35,44 @@ int getInput(fun[]);
 int insertMem(fun [], char, int);
 int validateInput(char, int);
 int calcCase(fun[], int);
-int profEquality(fun[], fun[]);
+int profEquality(fun[]);
 int printMem(fun[]);
 int genValues(int, int);
 int powerTwo(int);
 int insertValues(fun[], int);
 int profValues(fun[]);
 int calcResult(fun[], int, int);
-int profValues(fun[]);
 int boolCalc(int, int, int);
 
 int main(){
-	fun data[LIMIT]; 
-	fun data2[LIMIT];
+	fun data[LIMIT+1]; 
 
 	getInput(data);
-	getInput(data2);
 
-	if ( profEquality(data, data2) )
+	if ( profEquality(data) )
 		printf("True\n");
 	else
 		printf("False\n");
-	printMem(data);
-	printMem(data2);
 	return 0;
 }
 int getInput(fun mem[]){
 	int i = 0;
 	int error = true;
+	int second_formula = false;
 	char cache = '1';
-	while ( error ){
+	while ( error || !second_formula ){
 		/* Try, Clear all*/
 		error = false;
+		second_formula = false;
 		i = 0;
 		cache = '1';
 		printf("Please type the logical formula\n" );
 		while ( !error && i < LIMIT &&  cache != '\n' ){
 			cache = getchar();
 				error = validateInput(cache, i);
+				if ( cache == '5' ){
+					second_formula = true;
+				}
 				if ( cache == '\n' && i%2 == 0  ){
 					error = true;
 				}
@@ -91,6 +85,8 @@ int getInput(fun mem[]){
 						mem[i].not = false;
 					
 					error = insertMem(mem, cache, i);
+					mem[LIMIT].value = ( i + 1 ) / 2;
+					printf("Num Prop: %d\n", mem[LIMIT].value);
 					i++;
 				}
 				else{
@@ -98,6 +94,7 @@ int getInput(fun mem[]){
 					printf("Please type a corect formula\n");
 				}
 		}
+
 	}
 	return error;
 }
@@ -117,7 +114,7 @@ int validateInput(char cache, int i){
 			error = true;
 	}
 	else{
-		if ( cache >= '1' && cache <= '4' ){
+		if ( cache >= '1' && cache <= '5' ){
 			error = false;
 		}
 		else
@@ -139,12 +136,11 @@ int insertMem(fun mem[], char cache, int i){
 	}
 	return 0;
 }
-/* i should be number of prepositons*/
-int profEquality(fun mem[], fun mem2[]){
+int profEquality(fun mem[]){
 	int  equal = true;
 	int i = 0;
-	while ( equal && i < 8  ){
-		if ( calcCase(mem, i) == calcCase(mem2, i) ){
+	while ( equal && i < mem[LIMIT+1].value  ){
+		if ( calcCase(mem, i) ){
 			equal = true;
 			i++;
 		}
@@ -179,7 +175,6 @@ int profValues(fun mem[]){
 	while ( mem[i-1].name != '\n' ){
 		if ( mem[i].not == true ){
 			mem[i].value = !mem[i].value;
-			printf("Invert\n");
 		}
 		i += 2;
 	}
@@ -189,14 +184,14 @@ int calcResult(fun mem[], int start, int end){
 	int ris;
 	int pos = 0;
 	int j = start;
-	int level = 4;
+	int level = 0;
 
 	if ( mem[start+1].name == '\n' || end == 0 || end == start ){
 		ris = mem[start].value;		
 	}      
 	else{
 		while( j < end && mem[j+1].name != '\n' ){
-			if ( level > mem[j+1].value ){
+			if ( level < mem[j+1].value ){
 				level = mem[j+1].value;
 				pos = j + 1;
 			}
@@ -221,6 +216,10 @@ int boolCalc(int a, int op, int b){
 		case 4: 
 			res = ( ( !a ) && ( !b ) ) || ( a && b );
 			break;
+		case 5:
+			res = ( ( !a ) && ( !b ) ) || ( a && b );
+			break;
+
 	}	
 	return res;
 }
