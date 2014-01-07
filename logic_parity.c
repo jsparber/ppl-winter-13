@@ -22,7 +22,7 @@
 
 #define true 1
 #define false 0
-#define LIMIT 15
+#define LIMIT 16
 
 typedef  struct{
 	char name;
@@ -70,32 +70,33 @@ int getInput(fun mem[]){
 		printf("Please type the logical formula\n" );
 		while ( !error && i < LIMIT &&  cache != '\n' ){
 			cache = getchar();
-				error = validateInput(cache, i);
-				if ( cache == '5' ){
-					second_formula = true;
+			error = validateInput(cache, i);
+			if ( cache == '5' ){
+				second_formula = true;
+			}
+			if ( cache == '\n' && i%2 == 0  ){
+				error = true;
+			}
+			if ( !error ){
+				if ( cache == '0' ){
+					mem[i].not = true;
+					cache = getchar();
 				}
-				if ( cache == '\n' && i%2 == 0  ){
-					error = true;
+				else{
+					mem[i].not = false;
 				}
-				if ( !error ){
-					if ( cache == '0' ){
-						mem[i].not = true;
-						cache = getchar();
-					}
-					else
-						mem[i].not = false;
-					
-					error = insertMem(mem, cache, i);
-					mem[LIMIT].value = ( i + 1 ) / 2;
-					i++;
-				}
+				error = insertMem(mem, cache, i);
+				mem[LIMIT].value = ( i + 1 ) / 2;
+				i++;
+			}
 		}
-		if ( error || !second_formula || i >= LIMIT ){
+		if ( cache != '\n' ){
+			clearBuffer();
+			error = true;
+		}
+		if ( error || !second_formula ){
 			printf("Please type a corect formula\n");
 			error = true;
-			if ( cache != '\n' ){
-					clearBuffer();
-			}
 		}
 
 	}
