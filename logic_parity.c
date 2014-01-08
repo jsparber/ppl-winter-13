@@ -73,6 +73,9 @@ int getInput(fun mem[]){
 			error = validateInput(cache, i);
 			if ( cache == '5' ){
 				second_formula = true;
+				if ( mem[LIMIT].value > 3 ){
+					error = true;
+				}
 			}
 			if ( cache == '\n' && i%2 == 0  ){
 				error = true;
