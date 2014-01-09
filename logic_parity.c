@@ -30,29 +30,49 @@ typedef  struct{
 	int not;
 } fun;
 
+/*Clears the Terminal Charakter Buffer
+ * if a errer where found*/
 int clearBuffer();
+/*Reads the Terminal Charakter and
+ * launch validateInputi()*/
 int getInput(fun[]);
+/*saves Character in Data Array*/
 int insertMem(fun [], char, int);
+/* Validate Input*/
 int validateInput(char, int);
-int calcCase(fun[], int);
+/* Launchs for each Thrue Table line calcCase()*/
 int profEquality(fun[]);
-int printMem(fun[]);
+/* Calculats  the result for the specificate line*/
+int calcCase(fun[], int);
+/* Calculats and insert Values for Prepositons
+ * dipendend on Positon and
+ * the current line of the thure table*/
 int genValues(int, int);
+/* calculats 2^x*/
 int powerTwo(int);
+/* writes Values into the data Array */
 int insertValues(fun[], int);
+/* Inverts the invertet Prepositons
+ * Inserts the same Value for same Prepositons*/
 int profValues(fun[]);
+/* Calculats recrusiv the resault of the formula*/
 int calcResult(fun[], int, int);
+/* Basic implimentation of the prepositon logic*/
 int boolCalc(int, int, int);
+/* Prints the Data Array
+ * Only Test propoos*/
+int printMem(fun[]);
 
 int main(){
 	fun data[LIMIT+1]; 
-
+	/*read User input form termianl*/
 	getInput(data);
-
+    /* profEquality of the two formulas and print the result*/
+	
 	if ( profEquality(data) )
-		printf("True\n");
+		printf("The two forumlas are equal!\n");
 	else
-		printf("False\n");
+		printf("The two formulas are not equal!\n");
 	return 0;
 }
 
@@ -63,15 +83,16 @@ int getInput(fun mem[]){
 	int count_con = 0;
 	char cache = '1';
 	while ( error || !second_formula ){
-		/* Try, Clear all*/
+		/* Try and Clear all*/
 		error = false;
 		second_formula = false;
 		i = 0;
 		count_con = 0;
 		cache = '1';
-		printf("Please type the logical formula\n" );
+		printf("Please type the two logical formulas seperated by 5\n" );
 		while ( !error && i < LIMIT &&  cache != '\n' ){
 			cache = getchar();
+			/*Validate Input */
 			error = validateInput(cache, i);
 			if ( cache == '5' ){
 				second_formula = true;
@@ -82,6 +103,7 @@ int getInput(fun mem[]){
 			if ( cache == '\n' && i%2 == 0  ){
 				error = true;
 			}
+			/* Do things only without error*/
 			if ( !error ){
 				if ( cache == '0' ){
 					count_con++;
@@ -104,7 +126,7 @@ int getInput(fun mem[]){
 			error = true;
 		}
 		if ( error || !second_formula ){
-			printf("Please type a corect formula\n");
+			printf("Please type corect formulais\n");
 			error = true;
 		}
 
@@ -121,6 +143,7 @@ int clearBuffer(){
 int validateInput(char cache, int i){
 	int error = true;
 	if ( i%2 == 0 ){
+		/*check if a letter or '0'*/
 		if ( (cache >= 'A' && cache <= 'Z') || cache == '0' ){
 			error = false;
 		}
@@ -128,6 +151,7 @@ int validateInput(char cache, int i){
 			error = true;
 	}
 	else{
+		/*check if a right conectiv*/
 		if ( cache >= '1' && cache <= '5' ){
 			error = false;
 		}
@@ -211,6 +235,7 @@ int calcResult(fun mem[], int start, int end){
 			}
 			j += 2;
 		}
+		/*split formula in twoi sub formulas*/
 		ris = boolCalc(calcResult(mem, start, pos-1), mem[pos].value, calcResult(mem, pos+1, end));
 	}
 	return ris;
