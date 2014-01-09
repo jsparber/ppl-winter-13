@@ -30,42 +30,42 @@ typedef  struct{
 	int not;
 } fun;
 
-/*Clears the Terminal Charakter Buffer
- * if a errer where found*/
+/*Clears the Terminal Character Buffer
+ * if an error was found*/
 int clearBuffer();
-/*Reads the Terminal Charakter and
- * launch validateInputi()*/
+/*Reads the Terminal Character and
+ * launches validateInput()*/
 int getInput(fun[]);
 /*saves Character in Data Array*/
 int insertMem(fun [], char, int);
 /* Validate Input*/
 int validateInput(char, int);
-/* Launchs for each Thrue Table line calcCase()*/
+/* Launches for each Thruth Table line calcCase()*/
 int profEquality(fun[]);
-/* Calculats  the result for the specificate line*/
+/* Calculates the result for the specific line*/
 int calcCase(fun[], int);
-/* Calculats and insert Values for Prepositons
- * dipendend on Positon and
- * the current line of the thure table*/
+/* Calculates and inserts Values for Propositions
+ * depending on Positon and
+ * the current line of the truth table*/
 int genValues(int, int);
 /* calculats 2^x*/
 int powerTwo(int);
 /* writes Values into the data Array */
 int insertValues(fun[], int);
-/* Inverts the invertet Prepositons
- * Inserts the same Value for same Prepositons*/
+/* Inverts the inverted Propositions
+ * Inserts the same Value for same Propositions*/
 int profValues(fun[]);
-/* Calculats recrusiv the resault of the formula*/
+/* Calculates the result of the formula recrusively*/
 int calcResult(fun[], int, int);
-/* Basic implimentation of the prepositon logic*/
+/* Basic implimentation of the Propositions logic*/
 int boolCalc(int, int, int);
 /* Prints the Data Array
- * Only Test propoos*/
+ * Only for Testing Purposes*/
 int printMem(fun[]);
 
 int main(){
 	fun data[LIMIT+1]; 
-	/*read User input form termianl*/
+	/*read User input form terminal*/
 	getInput(data);
     /* profEquality of the two formulas and print the result*/
 	
@@ -103,7 +103,7 @@ int getInput(fun mem[]){
 			if ( cache == '\n' && i%2 == 0  ){
 				error = true;
 			}
-			/* Do things only without error*/
+			/* Do this only when there are no errors*/
 			if ( !error ){
 				if ( cache == '0' ){
 					count_con++;
@@ -143,7 +143,7 @@ int clearBuffer(){
 int validateInput(char cache, int i){
 	int error = true;
 	if ( i%2 == 0 ){
-		/*check if a letter or '0'*/
+		/*check if it is a letter or '0'*/
 		if ( (cache >= 'A' && cache <= 'Z') || cache == '0' ){
 			error = false;
 		}
@@ -151,7 +151,7 @@ int validateInput(char cache, int i){
 			error = true;
 	}
 	else{
-		/*check if a right conectiv*/
+		/*check if it is one of the right connectives*/
 		if ( cache >= '1' && cache <= '5' ){
 			error = false;
 		}
@@ -235,7 +235,7 @@ int calcResult(fun mem[], int start, int end){
 			}
 			j += 2;
 		}
-		/*split formula in twoi sub formulas*/
+		/*split formula in two sub formulas*/
 		ris = boolCalc(calcResult(mem, start, pos-1), mem[pos].value, calcResult(mem, pos+1, end));
 	}
 	return ris;

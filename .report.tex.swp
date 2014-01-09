@@ -1,0 +1,40 @@
+\documentclass[11pt, a4paper, titlepage, block]{article}
+\hyphenpenalty=10000
+\title{\textbf{Project for the 2013/2014 winter session\\ report}}
+\author{Julian Sparber}
+\date{\today}
+\begin{document}
+
+\maketitle
+\section{Specifying the problem}
+	Write an ANSI C program that gets from the keyboard two propositional logic formulas and
+	establishes whether they are equivalent. For the sake of simplicity, each formula can contain at
+	most three occurrences of logical connectives (not, or, and, if-then, iff), which can be represented
+	as single decimal digits. As a consequence, the formula can contain at most four occurrences of
+	propositions, which can be represented as single letters. Each formula must not contain parentheses,
+	thus it is necessary to apply precedence and associativity rules.
+	\newpage
+\section{Analyzing the problem}
+	The input are two logic formulas. The logical connectives are interpreted as number. \\
+	\\
+	\begin{tabular}{cc}
+	connective & number\\
+		not & 0\\
+		and & 1\\
+		or & 2\\
+		if-then & 3\\
+		iff & 4\\
+	\end{tabular}\\
+	\\
+	Example: A1B means A and B\\
+	\\ 
+	The output represent the equivalents of the two formulas. That means true or false.\\
+	The only way to establish if two logic formulas are equivalent is to calculate the Truth table.
+					
+\section{Designing the algorithm}
+	The two formulas 
+\section{Implementing the algorithm}
+\section{Testing the program}
+\section{Verifying the program}
+
+\end{document}
