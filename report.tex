@@ -1,4 +1,6 @@
 \documentclass[11pt, a4paper, titlepage, block]{article}
+\usepackage{listings}
+
 \hyphenpenalty=10000
 \title{\textbf{Project for the 2013/2014 winter session\\ report}}
 \author{Julian Sparber}
@@ -16,6 +18,7 @@
 	thus it is necessary to apply precedence and associativity rules.
 	\newpage
 \section{Analyzing the problem}
+	\subsection{Input}
 	The input are two logic formulas. The logical connectives are interpreted as number. \\
 	\\
 	\begin{tabular}{cc}
@@ -29,15 +32,39 @@
 	\\
 	Example: A1B means A and B\\
 	\\ 
-	\\
+	The two formulas are insert separated by 5\\
+	So, the input for Example looks like A1B5B1A (A $\vee $ B $\equiv $ B $\vee $ A)\\
+	The length is limited to 3 Connectives.
+	\subsection{Output}
 	The output represent the equivalents of the two formulas. That means true or false.\\
-	The only way to establish if two logic formulas are equivalent is to calculate the Truth table.
+	The only way to establish if two logic formulas are equivalent is to calculate the Truth table of each Formula and match them.
+	
 	\newpage			
 \section{Designing the algorithm}
-	The two formulas
+	\subsection{Input}
+	The two formulas were read character for character form the Terminal and directly checked if it is a valid character.
+	
+	\subsection{Memory Structure}
+		The formula is saved in an Array of a Structure with 3 Elements.\\
+		"name", "value" and Negation ("not").\\
+		There are two cases: Propositions and Connectives.\\
+		For Propositions:\\
+		The "name" contains the read character. \\
+		The "value" contains the state of an Propositions (So 1 or 0).\\
+		The "not" contains 1 if the Proposition is negated and 0 when not.\\
+		For Connectives:\\
+		The "name" contains the read character. \\
+		The "value" contains the number of the Connective  (So 1 or 0).\\
+		The "not" is not in use
+	\subsection{Elaboration}
+	Every possible combination of values ​​for the proposition be used in the formula and then calculated.\\
+	The Calculation Algorithm searches the Connective with the heights precedence in the formula and divides the formula in a left part and a right part. For each of the part will be done the same thing.
+	The 5 is like a iff if the two formulas are equal so it return 1 (true) else 0 (false). 
+	\subsection{Output}
+	The Result will be communicated back to the user.
 	\newpage
 \section{Implementing the algorithm}
-
+	see Source Code.
 
 	\newpage
 \section{Testing the program}
@@ -45,31 +72,74 @@
 	\\
 	\begin{tabular}{|c|c|c|c|}
 		\hline
+			Formula & Equivalent & Program Formula & Program Equivalent \\
+		\hline
 			A $\vee $ B $\equiv $ B $\vee $ A & TRUE & A2B5B2A & TRUE\\
 		\hline
 			A $\wedge $ B $\equiv $ B $\wedge $ A & TRUE & A1B5B1A & TRUE\\
 		\hline
-			31 & 32 & 33 & 34\\
+			A $\rightarrow  $ B $\equiv $ B $\rightarrow $ A & FALSE & A3B5B3A & FALSE\\
 		\hline
-			41 & 42 & 43 & 44\\
+			A $\leftrightarrow   $ B $\equiv $ B $\leftrightarrow  $ A & TRUE & A4B5B4A & TRUE\\
 		\hline
-			51 & 52 & 53 & 54\\
+			$\neg $A $\equiv $ A & FALSE & 0A5A & FALSE\\
 		\hline
-			61 & 62 & 63 & 64\\
+			A $\wedge $ B $\wedge $  C $\wedge $ D $\wedge $  E $\equiv $ & & A1B1C1D1E5 & ERROR:\\ 
+
+			A $\wedge $ B $\wedge $  C $\wedge $ D $\wedge $  E & TRUE & A1B1C1D1E & TO LONG FORMULA\\
 		\hline
-			71 & 72 & 73 & 74\\
+			A $\vee $ B $\wedge $ C $\equiv $ C $\wedge $ B $\vee $ A & TRUE & A2B1C5C1B2A & TRUE\\
 		\hline
-			81 & 82 & 83 & 84\\
+			$\neg $A $\vee $ B $\equiv $ A $\rightarrow  $ B& TRUE & 0A2B5A3B & TRUE\\
 		\hline
-			91 & 92 & 93 & 94\\
+			A $\vee $ B $\wedge $ C $\equiv $ C $\vee $ B $\wedge $ A & FALSE & A2B1C5C2B1A & FALSE\\
 		\hline
-			101 & 102 & 103 & 104\\
+			A $\wedge $ $\neg $A $\equiv $ A & FALSE & A10A5A & FALSE\\
 		\hline
-			111 & 112 & 113 & 114\\
+			A $\vee $ $\neg $A $\equiv $ A & FALSE & A20A5A & FALSE\\
+		\hline
+			$\vee $ A $\vee $ $\neg $A A $\vee $ $\equiv $ B & INVALID & 2A10AA15B & ERROR:\\
+			& FORMULA &   & INVALID FORMULA\\
 		\hline
 	\end{tabular}
 
 	\newpage
 \section{Verifying the program}
+\lstset{numbers=left, tabsize=2}
+\begin{lstlisting}
+{i >= 0}
+int insertMem(fun mem[], char cache, int i){
+     if ( i%2 == 0 ){P1}{
+        mem[i].name = cache;
+         mem[i].value = 0;
+     }
+     else{
+         mem[i].name = cache;
+        mem[i].value = (int)(cache - '0');
+     }
+    return 0;
+}
+\end{lstlisting}
+
+{n ≥ 0 ∧ t = n}
+r = 1; 
+{P 1}
+while(n ≠ 0) {P 2}{
+	r = r * n;
+	{P 3}
+	n = n - 1;
+}
+{r = t!}
+
+P 1 ≡  n ≥ 0 ∧ t = n ∧ r = 1
+P 2 ≡  r = t!/n! ∧ t ≥ n ≥ 0
+P 3 ≡  r = t!/(n - 1)! ∧ t ≥ n > 0
+
+{n ≥ 0 ∧ t = n } r = 1;{ P 1 }
+P 1 ⇒ P 2
+{P 2 ∧ n ≠ 0 } r = r * n;{ P 3 }
+{P 3} n = n - 1;{P 2}
+(P 2 ∧ ¬ (n ≠ 0)) ⇒ r = t!
+
 
 \end{document}
