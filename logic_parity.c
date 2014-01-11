@@ -70,9 +70,9 @@ int main(){
     /* profEquality of the two formulas and print the result*/
 	
 	if ( profEquality(data) )
-		printf("The two forumlas are equal!\n");
+		printf("True! The two forumlas are equal!\n");
 	else
-		printf("The two formulas are not equal!\n");
+		printf("False! The two formulas are not equal!\n");
 	return 0;
 }
 
@@ -177,7 +177,7 @@ int insertMem(fun mem[], char cache, int i){
 int profEquality(fun mem[]){
 	int  equal = true;
 	int i = 0;
-	while ( equal && i < mem[LIMIT+1].value  ){
+	while ( equal && i < mem[LIMIT].value  ){
 		if ( calcCase(mem, i) ){
 			equal = true;
 			i++;
@@ -188,6 +188,7 @@ int profEquality(fun mem[]){
 	return equal;
 }
 int calcCase(fun mem[], int line){
+
 	int res = 0;
 	insertValues(mem, line);
 	profValues(mem);
@@ -242,6 +243,7 @@ int calcResult(fun mem[], int start, int end){
 }
 int boolCalc(int a, int op, int b){
 	int res = 0;;
+	
 	switch (op){
 		case 1:
 			res = a && b;
@@ -299,7 +301,7 @@ int powerTwo(int x){
 int printMem(fun mem[]){
 	int i = 0;
 	while ( i < LIMIT && mem[i].name != '\n' ) {
-		printf("%d", mem[i].value);
+		printf("%c", mem[i].name);
 		i++;
 	}
 	printf("\n");
