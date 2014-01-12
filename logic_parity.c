@@ -65,13 +65,14 @@ int printMem(fun[]);
 
 int main(){
 	fun data[LIMIT+1]; 
+	printf("Please enter two logical formulas.\nFor propositions use uppercase letters (A - Z)\nfor connectives use numbers from 0 to 4\nnot -> 0\nand -> 1\nor -> 2\nif-then -> 3\niff -> 4\nand for the equivalent symbol use 5\nExample: A AND B <=> A AND B\nA1B5A1B\n");
 	/*read User input form terminal*/
 	getInput(data);
-    /* profEquality of the two formulas and print the result*/	
+    /* profEquality of the two formulas and print the result*/
 	if ( profEquality(data) )
-		printf("True! The two forumlas are equal!\n");
+		printf("True! The two forumlas are equivalent!\n");
 	else
-		printf("False! The two formulas are not equal!\n");
+		printf("False! The two formulas are not equivalent!\n");
 	return 0;
 }
 
@@ -88,7 +89,7 @@ int getInput(fun mem[]){
 		i = 0;
 		count_con = 0;
 		cache = '1';
-		printf("Please type the two logical formulas seperated by 5\n" );
+		printf("Please type the two logical formulas\n" );
 		while ( !error && i < LIMIT &&  cache != '\n' ){
 			cache = getchar();
 			/*Validate Input */
@@ -125,7 +126,7 @@ int getInput(fun mem[]){
 			error = true;
 		}
 		if ( error || !second_formula ){
-			printf("Please type corect formulais\n");
+			printf("Error: Please type twocorrect formulas!\n");
 			error = true;
 		}
 
