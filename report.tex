@@ -9,7 +9,7 @@
 \begin{document}
 
 \maketitle
-\section{Specifying the problem}
+\section{Specifying the Problem}
 	Write an ANSI C program that gets from the keyboard two propositional logic formulas and
 	establishes whether they are equivalent. For the sake of simplicity, each formula can contain at
 	most three occurrences of logical connectives (not, or, and, if-then, iff), which can be represented
@@ -17,9 +17,9 @@
 	propositions, which can be represented as single letters. Each formula must not contain parentheses,
 	thus it is necessary to apply precedence and associativity rules.
 	\newpage
-\section{Analyzing the problem}
+\section{Analyzing the Problem}
 	\subsection{Input}
-	The input are two logic formulas. The logical connectives are interpreted as number. \\
+	The input are two logic formulas. The logical connectives are interpreted as numbers. \\
 	\\
 	\begin{tabular}{cc}
 	connective & number\\
@@ -32,38 +32,37 @@
 	\\
 	Example: A1B means A $\wedge $ B\\
 	\\ 
-	The two formulas are insert separated by 5\\
-	So, the input for Example looks like A1B5B1A (A $\vee $ B $\equiv $ B $\vee $ A)\\
-	The length is limited to 3 Connectives.\\
-	The output represent the equivalents of the two formulas. That means true or false.\\
-	The only way to establish if two logic formulas are equivalent is to calculate the Truth table of each Formula and match them.
+	The two formulas are inserted in the same line, with 5 as a separator.\\
+	The input looks like this: A1B5B1A (A $\vee $ B $\equiv $ B $\vee $ A)\\\\
+	The length is limited to 3 connectives.\\
+	The output represents the equivalents of the two formulas. That means true or false.\\
+	The only way to establish if two logic formulas are equivalent is to calculate the truth table of each formula and compare them.
 	
 	\newpage			
-\section{Designing the algorithm}
+\section{Designing the Algorithm}
 	\subsection{Input}
-	The two formulas were read character for character form the Terminal and directly checked if it is a valid character.
+	The program reads two formulas character by character from the Terminal and checks for every character if it is valid.
 	
 	\subsection{Memory Structure}
-		The formula is saved in an Array of a Structure with 3 Elements.\\
-		"name", "value" and Negation ("not").\\
-		There are two cases: Propositions and Connectives.\\
-		For Propositions:\\
+		The formula is saved in an array with 3 elements: "name", "value" and negation ("not").\\
+		There are two cases: propositions and connectives.\\
+		For propositions:\\
 		The "name" contains the read character. \\
-		The "value" contains the state of an Propositions (So 1 or 0).\\
-		The "not" contains 1 if the Proposition is negated and 0 when not.\\
-		For Connectives:\\
+		The "value" contains the state of a proposition (So 1 or 0).\\
+		The "not" contains 1 if the proposition is negated and 0 when not.\\
+		For connectives:\\
 		The "name" contains the read character. \\
-		The "value" contains the number of the Connective  (So 1 or 0).\\
+		The "value" contains the number of the connective  (So 1 or 0).\\
 		The "not" is not in use
 	\subsection{Elaboration}
-	Every possible combination of values ​​for the proposition be used in the formula and then calculated.\\
-	The Calculation Algorithm searches the Connective with the heights precedence in the formula and divides the formula in a left part and a right part. For each of the part will be done the same thing.
-	The 5 is like a iff if the two formulas are equal so it return 1 (true) else 0 (false). 
+	Every possible combination of values for the proposition is inserted into the formula, and all results are calculated.\\
+	The calculation algorithm searches for the connective with the highest precedence in the formula and divides the formula into a left part and a right part. Then it carries out the same operations on each part.
+	The 5 is like an "iff" if the two formulas are equal so the result is either 1 (true) or 0 (false). 
 	\subsection{Output}
-	The Result will be communicated back to the user.
+	The result is visualized for the user.
 	\newpage
 \section{Implementing the algorithm}
-	see Source Code.
+	See source code.
 
 	\newpage
 \section{Testing the program}
