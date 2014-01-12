@@ -1,14 +1,69 @@
 \documentclass[11pt, a4paper, titlepage, block]{article}
 \usepackage{listings}
-
 \hyphenpenalty=10000
-\title{\textbf{Project for the 2013/2014 winter session\\ report}}
-\author{Julian Sparber}
-\date{\today}
 
 \begin{document}
+\begin{titlepage}
 
-\maketitle
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\LARGE University of Urbino}\\[1.5cm] % Name of your university/college
+\textsc{\Large applied computer science}\\[0.5cm] % Major heading such as course name
+\textsc{\large Procedural and logic programming}\\[0.5cm] % Minor heading such as course title
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+
+\HRule \\[0.4cm]
+{ \huge \bfseries Report}\\[0.2cm] % Title of your document
+\HRule \\[0.4cm]
+\textsc{\large Project for the 2013/2014 winter session}
+\\[0.5cm]
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{minipage}{\textwidth}
+\begin{flushleft}
+\emph{Student:}\\
+Julian \textsc{Sparber}\\ % Your name
+matric no: 260324
+\end{flushleft}
+\end{minipage}
+
+\begin{minipage}{\textwidth}
+\begin{flushright}
+\emph{Lecturer:} \\
+Marco \textsc{Bernardo} % Supervisor's Name
+\end{flushright}
+\end{minipage}\\[11cm]
+
+%----------------------------------------------------------------------------------------
+%	DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large \today}\\[10cm] % Date, change the \today to a set date if you want to be precise
+
+%----------------------------------------------------------------------------------------
+%	LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+%\includegraphics{Logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+
+\newpage
+
+\end{titlepage}
+
 \section{Specifying the Problem}
 	Write an ANSI C program that gets from the keyboard two propositional logic formulas and
 	establishes whether they are equivalent. For the sake of simplicity, each formula can contain at
@@ -56,7 +111,8 @@
 		The "not" is not in use
 	\subsection{Elaboration}
 	Every possible combination of values for the proposition is inserted into the formula, and all results are calculated.\\
-	The calculation algorithm searches for the connective with the highest precedence in the formula and divides the formula into a left part and a right part. Then it carries out the same operations on each part.
+	The calculation algorithm starts with the first elemtent of the Array and searches for the connective with the highest precedence  in the formula and divides the formula into a left part and a right part. Then it carries out the same operations on each part.\\
+	The parts will be conected with the logic connectives like "AND". \\
 	The 5 is like an "iff" if the two formulas are equal so the result is either 1 (true) or 0 (false). 
 	\subsection{Output}
 	The result is visualized for the user.
@@ -66,7 +122,7 @@
 
 	\newpage
 \section{Testing the program}
-	Test formulas\\
+	Test formulas:\\
 	\\
 	\begin{tabular}{|c|c|c|c|}
 		\hline
@@ -103,41 +159,29 @@
 
 	\newpage
 \section{Verifying the program}
-\lstset{numbers=left, tabsize=2}
+\lstset{numbers=left, tabsize=2, escapechar=?}
 \begin{lstlisting}
-{i >= 0}
-int insertMem(fun mem[], char cache, int i){
-     if ( i%2 == 0 ){P1}{
-        mem[i].name = cache;
-         mem[i].value = 0;
-     }
-     else{
-         mem[i].name = cache;
-        mem[i].value = (int)(cache - '0');
-     }
-    return 0;
-}
+{op ?$\geq $? 0 ?$\wedge $? 1 ?$\geq $? a ?$\geq $? 0 ?$\wedge $? 1 ?$\geq $? b ?$\geq $? 0}
+int res = 0;
+	
+	switch (op){P1}{
+		case 1:
+			res = a && b;
+			break;
+	{P2}
+{res = (a ?$\wedge $? b)}
+
 \end{lstlisting}
+P1 $\equiv $ 1 $\geq $ a $\geq $ 0 $\wedge $ 1 $\geq $ b $\geq $ 0\\
+P2 $\equiv $ op = 1 $\wedge $ 1 $\geq $ a $\geq $ 0 $\wedge $ 1 $\geq $ b $\geq $ 0 $\wedge $ res = (a $\wedge $ b)\\
+\\
+P1 is true by definition.\\
+When {op = 1} then P2 is true.\\
+Consequently \{res = (a $\wedge $ b)\} is true.\\
+Therefore the programm is correctly.
 
-{n ≥ 0 ∧ t = n}
-r = 1; 
-{P 1}
-while(n ≠ 0) {P 2}{
-	r = r * n;
-	{P 3}
-	n = n - 1;
-}
-{r = t!}
 
-P 1 ≡  n ≥ 0 ∧ t = n ∧ r = 1
-P 2 ≡  r = t!/n! ∧ t ≥ n ≥ 0
-P 3 ≡  r = t!/(n - 1)! ∧ t ≥ n > 0
 
-{n ≥ 0 ∧ t = n } r = 1;{ P 1 }
-P 1 ⇒ P 2
-{P 2 ∧ n ≠ 0 } r = r * n;{ P 3 }
-{P 3} n = n - 1;{P 2}
-(P 2 ∧ ¬ (n ≠ 0)) ⇒ r = t!
 
 
 \end{document}
