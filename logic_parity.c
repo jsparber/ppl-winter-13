@@ -67,8 +67,7 @@ int main(){
 	fun data[LIMIT+1]; 
 	/*read User input form terminal*/
 	getInput(data);
-    /* profEquality of the two formulas and print the result*/
-	
+    /* profEquality of the two formulas and print the result*/	
 	if ( profEquality(data) )
 		printf("True! The two forumlas are equal!\n");
 	else
