@@ -92,6 +92,8 @@ int getInput(fun mem[]){
 		printf("Please type the two logical formulas\n" );
 		while ( !error && i < LIMIT &&  cache != '\n' ){
 			cache = getchar();
+      while ( cache == ' ' )
+			  cache = getchar();
 			/*Validate Input */
 			error = validateInput(cache, i);
 			if ( cache == '5' ){
@@ -105,17 +107,15 @@ int getInput(fun mem[]){
 			}
 			/* Do this only when there are no errors*/
 			if ( !error ){
-				if ( cache == '0' ){
+				mem[i].not = false;
+				while ( cache == '0' ){
 					count_con++;
-					mem[i].not = true;
+					mem[i].not = !mem[i].not;
 					cache = getchar();
-				}
-				else{
-					mem[i].not = false;
 				}
 				error = insertMem(mem, cache, i);
 				mem[LIMIT].value = ( i + 1 ) / 2;
-				if ( i%2 != 0){
+				if ( i%2 != 0 ){
 					count_con++;
 				}
 				i++;
